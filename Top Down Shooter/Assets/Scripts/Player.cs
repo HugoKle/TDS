@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField] float dashSpeed = 8;
     [SerializeField] double stamina = 10;
     [SerializeField] int staminaCooldown = 1000;
+    [SerializeField] GameObject dashBar;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +38,13 @@ public class Player : MonoBehaviour
             stamina = 0;
             await Task.Delay(staminaCooldown);
             stamina = 1;
+            
         }
+    }
+
+    private object getComponent<T>()
+    {
+        throw new NotImplementedException();
     }
 
     void OnAttack()

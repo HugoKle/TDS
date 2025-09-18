@@ -529,6 +529,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 583331930}
     - target: {fileID: 3104376796431069936, guid: 865b5f15bf1f9244182ed1b2d50508ef, type: 3}
+      propertyPath: dashBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104376796431069936, guid: 865b5f15bf1f9244182ed1b2d50508ef, type: 3}
+      propertyPath: stamina
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104376796431069936, guid: 865b5f15bf1f9244182ed1b2d50508ef, type: 3}
+      propertyPath: dashSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104376796431069936, guid: 865b5f15bf1f9244182ed1b2d50508ef, type: 3}
       propertyPath: bulletSpeed
       value: 45
       objectReference: {fileID: 0}
