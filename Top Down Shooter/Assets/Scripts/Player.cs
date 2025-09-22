@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
     Vector2 moveInput;
+    Vector2 screenBoundery;
     [SerializeField] float moveSpeed = 35;
     [SerializeField] float rotationSpeed = 700f;
     [SerializeField] float bulletSpeed = 7;
@@ -22,7 +23,9 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DashRecharge();
         rb = GetComponent<Rigidbody2D>();
+        screenBoundery = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
     }
 
     private void OnMove(InputValue value)
@@ -37,11 +40,19 @@ public class Player : MonoBehaviour
             moveSpeed = moveSpeed * dashSpeed;
             await Task.Delay(50);
             moveSpeed = moveSpeed / dashSpeed;
-            stamina = 0;
-            await Task.Delay(staminaCooldown);
-            stamina = 1;
+            stamina -= 1;
             
         }
+    }
+
+    void DashRecharge()
+    {
+        if (stamina < 3)
+        {
+            stamina += 1;
+            
+        }
+        Invoke("DashRecharge", staminaCooldown);
     }
 
     private object getComponent<T>()
@@ -56,18 +67,29 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    async Task Update()
+    void Update()
     {
         rb.linearVelocity = moveInput * moveSpeed;
         if (moveInput != Vector2.zero)
         {
             targetAngle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
         }
+
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -screenBoundery.x, screenBoundery.x)
+                                        ,Mathf.Clamp(transform.position.y, -screenBoundery.y, screenBoundery.y));
     }
 
     void FixedUpdate()
     {
         float rotation = Mathf.MoveTowardsAngle(rb.rotation, targetAngle - 90, rotationSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(rotation);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

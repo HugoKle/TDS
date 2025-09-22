@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] float moveSpeed = 3f;
     Rigidbody2D rb;
+    Vector2 direction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,7 +16,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.MovePosition(rb.position +  direction * moveSpeed * Time.fixedDeltaTime);
+        if (player != null)
+        {
+            direction = (player.position - transform.position).normalized;
+        }
+    }
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
     }
 }
