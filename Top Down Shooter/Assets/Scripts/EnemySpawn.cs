@@ -3,8 +3,11 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject enemyFastPrefab;
     [SerializeField] GameObject boss1Prefab;
+    [SerializeField] GameObject boss1Prefab2;
     [SerializeField] GameObject boss2Prefab;
+    [SerializeField] GameObject boss2Prefab2;
     [SerializeField] float minSpawnTime = 1.0f;
     [SerializeField] float maxSpawnTime = 3.0f;
     [SerializeField] int wave;
@@ -48,24 +51,63 @@ public class EnemySpawn : MonoBehaviour
                 spawnPos = new Vector2(-screenBounds.x - spawnDistance, Random.Range(-screenBounds.y, screenBounds.y));
                 break;
         }
-        if (bossTimer < 10)
+        if ((bossTimer != 10 || bossTimer !> 19) && wave < 10)
         {
             Instantiate(enemyPrefab, spawnPos, transform.rotation);
             Invoke("SpawnEnemy", spawnTime);
         }
+
+        int enemyRandomizer = Random.Range(0, 2);
+        if (wave > 10)
+        {
+            switch (enemyRandomizer)
+            {
+                case 0:
+                    Instantiate(enemyFastPrefab, spawnPos, transform.rotation);
+                    break;
+                case 1:
+                    {
+                        Instantiate(enemyPrefab, spawnPos, transform.rotation);
+                        break;
+                    }
+            }
+            Invoke("SpawnEnemy", spawnTime);
+        }
+
         if (bossTimer == 10)
         {
-            Instantiate(boss1Prefab, spawnPos, transform.rotation);
+            int boss1Randomizer = Random.Range(0, 2);
+            switch (boss1Randomizer)
+            {
+                case 0:
+                    Instantiate(boss1Prefab, spawnPos, transform.rotation);
+                    break;
+                case 1:
+                    Instantiate(boss1Prefab2, spawnPos, transform.rotation);
+                    break;
+            }
+            
+            bossTimer += 1;
             Invoke("SpawnEnemy", 20);
         }
-        if (bossTimer > 19)
+
+        if (bossTimer > 20)
         {
-            Instantiate(boss2Prefab, spawnPos, transform.rotation);
-            Invoke("SpawnEnemy", 5);
+            int boss2Randomizer = Random.Range(0, 2);
+            switch (boss2Randomizer)
+            {
+                case 0:
+                    Instantiate(boss2Prefab, spawnPos, transform.rotation);
+                    break;
+                case 1:
+                    Instantiate(boss2Prefab2, spawnPos, transform.rotation);
+                    break;
+            }
+            Invoke("SpawnEnemy", 20);
             bossTimer = 0;
         }
 
-            
+
     }
     void Waves()
     {
@@ -73,7 +115,7 @@ public class EnemySpawn : MonoBehaviour
         {
             minSpawnTime = minSpawnTime - 1;
         }
-        if (maxSpawnTime > 1)
+        if (maxSpawnTime > 2)
         {
             maxSpawnTime = maxSpawnTime - 1;
 

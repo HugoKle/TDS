@@ -87,11 +87,11 @@ public class Player : MonoBehaviour
         float rotation = Mathf.MoveTowardsAngle(rb.rotation, targetAngle - 90, rotationSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(rotation);
     }
-
-    private async Task OnCollisionEnter2D(Collision2D collision)
+    
+    private async Task OnCollisionStay2D(Collision2D collision)
     {
         if ((collision.gameObject.CompareTag("Enemy") && !invincible) ||
-            (collision.gameObject.CompareTag("Boss") && !invincible))
+    (collision.gameObject.CompareTag("Boss") && !invincible))
         {
             health -= 1;
             Debug.Log(health);
@@ -105,5 +105,19 @@ public class Player : MonoBehaviour
             invincible = false;
             Debug.Log(invincible);
         }
+    }
+    private async Task OnTriggerEnter2D(Collider2D collision)
+    {
+        health -= 1;
+        Debug.Log(health);
+        invincible = true;
+        Debug.Log(invincible);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        await Task.Delay(invincibleTime);
+        invincible = false;
+        Debug.Log(invincible);
     }
 }
