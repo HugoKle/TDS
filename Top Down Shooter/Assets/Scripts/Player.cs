@@ -108,16 +108,25 @@ public class Player : MonoBehaviour
     }
     private async Task OnTriggerEnter2D(Collider2D collision)
     {
-        health -= 1;
-        Debug.Log(health);
-        invincible = true;
-        Debug.Log(invincible);
-        if (health <= 0)
+        if ((collision.gameObject.CompareTag("Enemy") && !invincible) ||
+            (collision.gameObject.CompareTag("Boss") && !invincible))
         {
-            Destroy(gameObject);
+            health -= 1;
+            Debug.Log(health);
+            invincible = true;
+            Debug.Log(invincible);
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+            await Task.Delay(invincibleTime);
+            invincible = false;
+            Debug.Log(invincible);
         }
-        await Task.Delay(invincibleTime);
-        invincible = false;
-        Debug.Log(invincible);
+        if (collision.gameObject.CompareTag("Heal"))
+        {
+            health += 1;
+            Destroy(collision.gameObject);
+        }
     }
 }

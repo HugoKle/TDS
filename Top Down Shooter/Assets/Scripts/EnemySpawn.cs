@@ -4,6 +4,7 @@ public class EnemySpawn : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject enemyFastPrefab;
+    [SerializeField] GameObject enemyBombPrefab;
     [SerializeField] GameObject boss1Prefab;
     [SerializeField] GameObject boss1Prefab2;
     [SerializeField] GameObject boss2Prefab;
@@ -57,7 +58,7 @@ public class EnemySpawn : MonoBehaviour
             Invoke("SpawnEnemy", spawnTime);
         }
 
-        int enemyRandomizer = Random.Range(0, 2);
+        int enemyRandomizer = Random.Range(0, 3);
         if (wave > 10)
         {
             switch (enemyRandomizer)
@@ -66,10 +67,18 @@ public class EnemySpawn : MonoBehaviour
                     Instantiate(enemyFastPrefab, spawnPos, transform.rotation);
                     break;
                 case 1:
-                    {
                         Instantiate(enemyPrefab, spawnPos, transform.rotation);
                         break;
+                case 2:
+                    if (wave > 20)
+                    {
+                        Instantiate(enemyBombPrefab, spawnPos, transform.rotation);
                     }
+                    else
+                    {
+                        Instantiate(enemyFastPrefab, spawnPos, transform.rotation);
+                    }
+                    break;
             }
             Invoke("SpawnEnemy", spawnTime);
         }

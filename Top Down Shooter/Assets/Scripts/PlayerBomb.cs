@@ -1,13 +1,13 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBomb : MonoBehaviour
 {
-    [SerializeField] GameObject bomb;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    async Task Start()
     {
-        
+        await Task.Delay(500);
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -17,16 +17,9 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Instantiate(bomb, transform.position, transform.rotation);
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
         }
-        Destroy(gameObject);
     }
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
-    
 }
