@@ -170,9 +170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   player: {fileID: 0}
   moveSpeed: 3
+  origMoveSpeed: 3
   bossHealth: 20
   laserAttackSpeed: 5
   lasers: 3
-  upgrade: {fileID: 0}
+  upgrade: {fileID: 3381707951329344891, guid: d2d12f681956f3543a7429d552044060, type: 3}
   laserDisplayVertical: {fileID: 742358878487856580, guid: a445feeecce77f946b9eb4e71ca47416, type: 3}
   laserDisplayHorizontal: {fileID: 9205321292041856442, guid: ff3ea48ff511e164ebea3c47e620db06, type: 3}

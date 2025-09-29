@@ -15,19 +15,25 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject explosiveBullet;
     [SerializeField] GameObject gun;
+    [SerializeField] GameObject laserHorizontal;
+    [SerializeField] GameObject laserVertical;
     [SerializeField] float dashSpeed = 8f;
-    [SerializeField] double stamina = 10;
+    [SerializeField] double stamina = 1;
     [SerializeField] int staminaCooldown = 1;
+    [SerializeField] int maxDash = 2;
     [SerializeField] int health = 5;
+    [SerializeField] int maxHealth = 5;
     [SerializeField] int invincibleTime = 2000;
     [SerializeField] int bullets = 1;
+    [SerializeField] int lasers = 1;
+    [SerializeField] float laserAttackSpeed = 10f;
     [SerializeField] bool backwardsBullet = false;
     [SerializeField] bool explodingBullet = false;
     [SerializeField] bool dash = false;
+    [SerializeField] bool laserUpgrade = false;
 
     GameObject currentBullet;
     bool invincible = false;
-    int maxDash = 3;
     float targetAngle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +42,7 @@ public class Player : MonoBehaviour
         DashRecharge();
         rb = GetComponent<Rigidbody2D>();
         screenBoundery = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        LaserAttack();
     }
 
     private void OnMove(InputValue value)
@@ -113,6 +120,21 @@ public class Player : MonoBehaviour
         float rotation = Mathf.MoveTowardsAngle(rb.rotation, targetAngle - 90, rotationSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(rotation);
     }
+
+    async Task LaserAttack()
+    {
+
+        if (laserUpgrade)
+        {
+            for (int laserloops = lasers; laserloops != 0; laserloops--)
+            {
+                Instantiate(laserHorizontal, transform.position, transform.rotation);
+                Instantiate(laserVertical, transform.position, transform.rotation);
+                await Task.Delay(500);
+            }
+        }
+        Invoke("LaserAttack", laserAttackSpeed);
+    }
     
     private async Task OnCollisionStay2D(Collision2D collision)
     {
@@ -153,7 +175,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (collision.gameObject.CompareTag("Heal") && health < 5)
+        if (collision.gameObject.CompareTag("Heal") && health < maxHealth)
         {
             health++;
             Destroy(collision.gameObject);
@@ -185,6 +207,30 @@ public class Player : MonoBehaviour
                 maxDash ++;
             }
             dash = true;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Laser"))
+        {
+            if (laserUpgrade)
+            {
+                laserAttackSpeed--;
+                if (laserAttackSpeed <= 2)
+                {
+                    lasers++;
+                    laserAttackSpeed++;
+                }
+            }
+            laserUpgrade = true;
+            Destroy (collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Stat"))
+        {
+                maxHealth++;
+                health++;
+                moveSpeed += 2;
+                maxDash ++;
+                stamina = maxDash;
+
             Destroy(collision.gameObject);
         }
     }
