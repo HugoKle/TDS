@@ -3,6 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject bomb;
+    [SerializeField] bool bombActive;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,7 +18,10 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Instantiate(bomb, transform.position, transform.rotation);
+        if (bombActive)
+        {
+            Instantiate(bomb, transform.position, transform.rotation);
+        }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);

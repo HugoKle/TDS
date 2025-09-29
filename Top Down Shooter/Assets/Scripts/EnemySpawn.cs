@@ -7,8 +7,10 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] GameObject enemyBombPrefab;
     [SerializeField] GameObject boss1Prefab;
     [SerializeField] GameObject boss1Prefab2;
+    [SerializeField] GameObject boss1Prefab3;
     [SerializeField] GameObject boss2Prefab;
     [SerializeField] GameObject boss2Prefab2;
+    [SerializeField] GameObject boss2Prefab3;
     [SerializeField] float minSpawnTime = 1.0f;
     [SerializeField] float maxSpawnTime = 3.0f;
     [SerializeField] int wave;
@@ -85,7 +87,7 @@ public class EnemySpawn : MonoBehaviour
 
         if (bossTimer == 10)
         {
-            int boss1Randomizer = Random.Range(0, 2);
+            int boss1Randomizer = Random.Range(0, 3);
             switch (boss1Randomizer)
             {
                 case 0:
@@ -93,6 +95,9 @@ public class EnemySpawn : MonoBehaviour
                     break;
                 case 1:
                     Instantiate(boss1Prefab2, spawnPos, transform.rotation);
+                    break;
+                case 2:
+                    Instantiate(boss1Prefab3, spawnPos, transform.rotation);
                     break;
             }
             
@@ -102,7 +107,7 @@ public class EnemySpawn : MonoBehaviour
 
         if (bossTimer > 20)
         {
-            int boss2Randomizer = Random.Range(0, 2);
+            int boss2Randomizer = Random.Range(0, 3);
             switch (boss2Randomizer)
             {
                 case 0:
@@ -110,6 +115,9 @@ public class EnemySpawn : MonoBehaviour
                     break;
                 case 1:
                     Instantiate(boss2Prefab2, spawnPos, transform.rotation);
+                    break;
+                case 2:
+                    Instantiate(boss2Prefab3, spawnPos, transform.rotation);
                     break;
             }
             Invoke("SpawnEnemy", 20);
@@ -122,11 +130,11 @@ public class EnemySpawn : MonoBehaviour
     {
         if (minSpawnTime > 1)
         {
-            minSpawnTime = minSpawnTime - 1;
+            minSpawnTime = minSpawnTime - 0.2f;
         }
         if (maxSpawnTime > 2)
         {
-            maxSpawnTime = maxSpawnTime - 1;
+            maxSpawnTime = maxSpawnTime - 0.2f;
 
         }
         wave += 1;

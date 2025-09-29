@@ -103,3 +103,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a255ad6d12e0e3c408cead3e78317f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  bomb: {fileID: 18784038867048282, guid: 1fabdec82c01e4b47a20249fb95bb430, type: 3}
+  warningTime: 1

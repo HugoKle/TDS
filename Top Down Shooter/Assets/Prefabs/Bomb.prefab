@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8884186020915524186}
   m_Layer: 6
   m_Name: Bomb
-  m_TagString: Boss
+  m_TagString: Boss Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,3 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff84b61cca4ca043a3eaa9bff8ab8b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  aliveTime: 5

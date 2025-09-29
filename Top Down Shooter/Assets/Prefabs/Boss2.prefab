@@ -108,6 +108,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 5
   bossHealth: 12
+  upgrade: {fileID: 883673769353478071, guid: 01dc9cceafccfbd4aa3a53d029c00e78, type: 3}
 --- !u!50 &2074088735366339418
 Rigidbody2D:
   serializedVersion: 5

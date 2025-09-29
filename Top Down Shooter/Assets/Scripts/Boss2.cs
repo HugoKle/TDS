@@ -6,6 +6,7 @@ public class Boss2 : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] int bossHealth = 12;
+    [SerializeField] GameObject upgrade;
 
     bool invincible = false;
     Rigidbody2D rb;
@@ -39,6 +40,7 @@ public class Boss2 : MonoBehaviour
             invincible = true;
             if (bossHealth <= 0)
             {
+                Instantiate(upgrade, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
             await Task.Delay(300);

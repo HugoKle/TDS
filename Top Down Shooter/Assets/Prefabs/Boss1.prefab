@@ -190,3 +190,4 @@ MonoBehaviour:
   moveSpeed: 0.5
   bossHealth: 20
   bulletSpeed: 0.01
+  upgrade: {fileID: 6073111070960235351, guid: f523a56ae4edeb246ad1f01fb61db705, type: 3}

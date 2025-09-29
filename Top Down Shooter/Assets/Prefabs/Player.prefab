@@ -138,10 +138,15 @@ MonoBehaviour:
   rotationSpeed: 700
   bulletSpeed: 45
   bullet: {fileID: 1881075935537165054, guid: 2e6354994143b2a429c932ad9f032c6f, type: 3}
+  explosiveBullet: {fileID: 2324870669860604086, guid: b4c60cbb6461a57488a66bfccdfeca69, type: 3}
   gun: {fileID: 6286158606134263777}
   dashSpeed: 10
   stamina: 1
   staminaCooldown: 1
+  health: 5
+  invincibleTime: 2000
+  bullets: 1
+  backwardsBullet: 0
 --- !u!114 &1088993931781268453
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Boss12 : MonoBehaviour
     [SerializeField] float origMoveSpeed = 3.0f;
     [SerializeField] float moveSpeed = 3.0f;
     [SerializeField] int bossHealth = 12;
+    [SerializeField] GameObject upgrade;
 
     Transform dashPos;
     bool dashing = false;
@@ -69,6 +70,7 @@ public class Boss12 : MonoBehaviour
             invincible = true;
             if (bossHealth <= 0)
             {
+                Instantiate(upgrade, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
             await Task.Delay(300);

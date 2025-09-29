@@ -9,6 +9,14 @@ TagManager:
   - Bullet
   - BombDisplay
   - Heal
+  - Backward bullet
+  - Speed
+  - Boss Projectile
+  - Exploding Bullet
+  - Dash
+  - Burst
+  - HitByBullet
+  - BossBlade
   layers:
   - Default
   - TransparentFX

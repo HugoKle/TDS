@@ -13,14 +13,21 @@ public class Player : MonoBehaviour
     [SerializeField] float rotationSpeed = 700f;
     [SerializeField] float bulletSpeed = 7f;
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject explosiveBullet;
     [SerializeField] GameObject gun;
     [SerializeField] float dashSpeed = 8f;
     [SerializeField] double stamina = 10;
     [SerializeField] int staminaCooldown = 1;
     [SerializeField] int health = 5;
     [SerializeField] int invincibleTime = 2000;
+    [SerializeField] int bullets = 1;
+    [SerializeField] bool backwardsBullet = false;
+    [SerializeField] bool explodingBullet = false;
+    [SerializeField] bool dash = false;
 
+    GameObject currentBullet;
     bool invincible = false;
+    int maxDash = 3;
     float targetAngle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,7 +45,7 @@ public class Player : MonoBehaviour
 
     async Task OnJump()
     {
-        if (stamina > 0)
+        if (stamina > 0 && dash)
         {
             moveSpeed = moveSpeed * dashSpeed;
             await Task.Delay(50);
@@ -50,7 +57,7 @@ public class Player : MonoBehaviour
 
     void DashRecharge()
     {
-        if (stamina < 3)
+        if (stamina < maxDash)
         {
             stamina += 1;
             
@@ -63,10 +70,29 @@ public class Player : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    void OnAttack()
+    async Task OnAttack()
     {
-        Rigidbody2D playerBullet = Instantiate(bullet, gun.transform.position, transform.rotation).GetComponent<Rigidbody2D>();
-        playerBullet.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+
+        for (int bulletLoop = bullets; bulletLoop != 0; bulletLoop--)
+        {
+            if (explodingBullet)
+            {
+                currentBullet = explosiveBullet;
+            }
+            if (!explodingBullet)
+            {
+                currentBullet = bullet;
+            }
+            Rigidbody2D playerBullet = Instantiate(currentBullet, gun.transform.position, transform.rotation).GetComponent<Rigidbody2D>();
+            playerBullet.AddForce(transform.up * bulletSpeed, ForceMode2D.Impulse);
+            if (backwardsBullet)
+            {
+            Rigidbody2D backwardsPlayerBullet = Instantiate(currentBullet, gun.transform.position, transform.rotation).GetComponent<Rigidbody2D>();
+            backwardsPlayerBullet.AddForce(transform.up * -bulletSpeed, ForceMode2D.Impulse);
+            }
+
+            await Task.Delay(50);
+        }
     }
 
     // Update is called once per frame
@@ -91,7 +117,8 @@ public class Player : MonoBehaviour
     private async Task OnCollisionStay2D(Collision2D collision)
     {
         if ((collision.gameObject.CompareTag("Enemy") && !invincible) ||
-    (collision.gameObject.CompareTag("Boss") && !invincible))
+            (collision.gameObject.CompareTag("Boss") && !invincible) || 
+            (collision.gameObject.CompareTag("Boss Projectile") && !invincible))
         {
             health -= 1;
             Debug.Log(health);
@@ -101,7 +128,7 @@ public class Player : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            await Task.Delay(invincibleTime);
+            await Task.Delay(invincibleTime * 1000);
             invincible = false;
             Debug.Log(invincible);
         }
@@ -109,9 +136,10 @@ public class Player : MonoBehaviour
     private async Task OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.CompareTag("Enemy") && !invincible) ||
-            (collision.gameObject.CompareTag("Boss") && !invincible))
+            (collision.gameObject.CompareTag("Boss") && !invincible) ||
+            (collision.gameObject.CompareTag("Boss Projectile") && !invincible))
         {
-            health -= 1;
+            health --;
             Debug.Log(health);
             invincible = true;
             Debug.Log(invincible);
@@ -123,9 +151,40 @@ public class Player : MonoBehaviour
             invincible = false;
             Debug.Log(invincible);
         }
-        if (collision.gameObject.CompareTag("Heal"))
+
+
+        if (collision.gameObject.CompareTag("Heal") && health < 5)
         {
-            health += 1;
+            health++;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Speed"))
+        {
+            moveSpeed += 0.5f;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Backward bullet"))
+        {
+            backwardsBullet = true;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Exploding Bullet"))
+        {
+            explodingBullet = true;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Burst"))
+        {
+            bullets ++;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Dash"))
+        {
+            if (dash)
+            {
+                maxDash ++;
+            }
+            dash = true;
             Destroy(collision.gameObject);
         }
     }

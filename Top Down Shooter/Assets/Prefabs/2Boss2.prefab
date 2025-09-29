@@ -184,9 +184,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 1958492359680369346, guid: 865b5f15bf1f9244182ed1b2d50508ef, type: 3}
-  bombDisplayLocation: {fileID: 0}
   bombDisplay: {fileID: 337439313021910252, guid: 980b04a80bc2f05438f5568f8bf3c595, type: 3}
-  bomb: {fileID: 18784038867048282, guid: 1fabdec82c01e4b47a20249fb95bb430, type: 3}
-  attackSpeed: 2
+  attackSpeed: 1
+  artilleryAttackSpeed: 10
   moveSpeed: 1
   bossHealth: 25
+  artilleryStrikes: 12
+  upgrade: {fileID: 3792679618213732320, guid: 1047f0f90f81ab24fa519ab0f3a3f03a, type: 3}
