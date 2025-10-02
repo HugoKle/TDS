@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 public class Boss13 : MonoBehaviour
 {
     [SerializeField] Transform player;
-    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject bullet;  
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] int bossHealth = 12;
     [SerializeField] float bulletSpeed = 4f;

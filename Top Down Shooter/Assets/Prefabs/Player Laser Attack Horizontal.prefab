@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8485116255212404499}
   - component: {fileID: 6025926799643992669}
   - component: {fileID: -3960219140884603313}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Player Laser Attack Horizontal
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.89181405, g: 0.3754716, b: 1, a: 1}
+  m_Color: {r: 0.89181405, g: 0.3754716, b: 1, a: 0.87058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
